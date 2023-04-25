@@ -31,7 +31,7 @@ function myFunc() {
     req.end();
 }
 
-const job = new CronJob('0 * * * *', myFunc);
+const job = new CronJob('*/12 * * * *', myFunc);
 
 job.start();
 
