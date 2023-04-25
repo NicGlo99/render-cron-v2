@@ -1,9 +1,34 @@
 const express = require('express');
 const CronJob = require('cron').CronJob;
 const app = express();
-
+const telegramToken = '6297025529:AAFDxi-Fh8whw84AYTtwaQZ8NYM6jQ8jwLw';
+const https = require('https');
 function myFunc() {
     console.log('Cron job executed!');
+    const message = `Cron eseguito correttamente alle ${new Date().toLocaleString()}`;
+    const options = {
+        hostname: 'api.telegram.org',
+        port: 443,
+        path: `/bot${telegramToken}/sendMessage`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    const req = https.request(options, res => {
+        console.log(`statusCode: ${res.statusCode}`);
+    });
+
+    req.on('error', error => {
+        console.error(error);
+    });
+
+    req.write(JSON.stringify({
+        chat_id: '@VercelCronBotLog',
+        text: message
+    }));
+
+    req.end();
 }
 
 const job = new CronJob('*/1 * * * *', myFunc);
