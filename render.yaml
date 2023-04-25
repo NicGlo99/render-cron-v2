@@ -1,0 +1,4 @@
+name: my-cron-job
+type: web
+buildCommand: echo "This is a cron job, no build necessary"
+startCommand: node index.js
