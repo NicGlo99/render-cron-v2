@@ -1,11 +1,12 @@
 const express = require('express');
+const CronJob = require('cron').CronJob;
 const app = express();
 
 function myFunc() {
     console.log('Cron job executed!');
 }
 
-const job = new CronJob('0 10 * * *', myFunc);
+const job = new CronJob('*/1 * * * *', myFunc);
 
 job.start();
 
